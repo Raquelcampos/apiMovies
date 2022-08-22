@@ -14,7 +14,8 @@ export default class Shows extends Component{
         const InfoShows = response.data.results.map(item=>{
             return{
                 nome:item.name,
-                sinopse:item.overview
+                sinopse:item.overview,
+                
             }
         })
         this.setState({

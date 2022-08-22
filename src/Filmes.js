@@ -8,7 +8,7 @@ text-align:center;
 export const InfoMovies=styled.div`
 display:flex;
 img{
-    width:15%;
+    width:150px;
     height:200px;
     border:solid 1px;
     margin-bottom:10px;
@@ -35,7 +35,8 @@ export default class Filmes extends Component{
         const infoFilmes= response.data.results.map(item=>{
             return{
                 nome:item.title,
-                sinopse:item.overview
+                sinopse:item.overview,
+                imagem: `https://image.tmdb.org/t/p/w300/${item.poster_path}`
             }
         })
 
@@ -50,10 +51,11 @@ export default class Filmes extends Component{
                 <section>{this.state.movies.map(infos=>(
                 
                 <InfoMovies>
-                    <img src="" alt="img-movie" />
+                    <img src={infos.imagem} alt={infos.nome} />
                     <div>
                         <h2>{infos.nome}</h2>
                         <p>{infos.sinopse}</p>
+                        
                     </div>
                 </InfoMovies>    
                 ))}</section>
