@@ -1,21 +1,54 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import styled from 'styled-components'
-
+import styled, { createGlobalStyle } from 'styled-components'
+ 
+const GlobalStyle = createGlobalStyle`
+   *{
+    margin: 0;
+    padding: 0;
+    background:black;
+    color:white;
+    font-family: Open-Sans, Helvetica, Sans-Serif;
+  }
+`;
 export const Title=styled.h1`
-text-align:center;
+text-align:center
 `
-export const InfoMovies=styled.div`
-display:flex;
+
+ export const InfoMovies=styled.div`
+
+   border:solid 1px dimgray; 
+   border-radius:15px;
+   margin:8% 15% 8% 15% ;
+   width:70%;
+   height:250px;
+   box-shadow: 10px 5px 5px white;
+   
+   display:flex;
+   align-items:center;
+   justify-content: space-evenly;
+
 img{
-    width:150px;
-    height:200px;
-    border:solid 1px;
-    margin-bottom:10px;
+    width:20%;
+    height:70%;
 }
-div{
-    width:70%;
-    margin-left:8px;
+
+`
+export const Caracteres =styled.section`
+    display:flex;
+    flex-direction:column;
+    width:50%;
+   
+    
+button{
+    width:150px; 
+    border: solid 1px dimgray; 
+    border-radius:10px;
+    margin-left:15px;
+    cursor:pointer;
+}
+h2{
+    margin-bottom:10px;
 }
 `
 const Movie= axios.create({
@@ -23,7 +56,8 @@ const Movie= axios.create({
 })
 export default class Filmes extends Component{
     state={
-        movies:[]
+        movies:[],
+        aparecer:false
     }
     componentDidMount(){
        this.handleMovies()
@@ -42,21 +76,33 @@ export default class Filmes extends Component{
 
         this.setState({ movies:infoFilmes})
     }
+    appear= ()=>{
+
+        this.setState({
+            aparecer:true
+        })
+    }
 
     render(){
         return(
             <div>
+                 <GlobalStyle/>
                 <Title>POPULAR MOVIES</Title>
                 
                 <section>{this.state.movies.map(infos=>(
                 
                 <InfoMovies>
                     <img src={infos.imagem} alt={infos.nome} />
-                    <div>
+                    <Caracteres>
                         <h2>{infos.nome}</h2>
-                        <p>{infos.sinopse}</p>
-                        
-                    </div>
+                        { this.state.aparecer && <p>{infos.sinopse}</p>}
+                    
+                        <div>
+                            <button>ASSISTIR</button>
+                            <button onClick={()=>{this.appear()}}>SINOPSE</button>
+                        </div>
+                     </Caracteres>    
+                    
                 </InfoMovies>    
                 ))}</section>
             </div>
